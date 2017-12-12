@@ -1,23 +1,42 @@
+"""
+Test myMBSSID packet
+Mapping to Packet #1 of Network_Join_Nokia_Mobile.pcap
+"""
 from scapy.all import *
 
+dot11 = Dot11(type='Management', subtype=8, addr1='ff:ff:ff:ff:ff:ff',
+addr2='22:22:22:22:22:22', addr3='33:33:33:33:33:33', SC=0xf010)
+# Fixed IE in beacon (timestamp, beacon_interval, cap)
+beacon = Dot11Beacon(timestamp=0x00000002691a2184, cap='ESS+privacy+short-slot')
+# TLV IE in beacon
+netSSID="martinet3"
+essid = Dot11Elt(ID='SSID',info=netSSID, len=len(netSSID))
+supRates=Dot11Elt(ID='Rates', info=(
+'\x82\x84\x8b\x96\x24\x30\x48\x6c'
+))
+dsSetIe=Dot11Elt(ID='DSset', info=(
+'\x0b'
+))
+timIe=Dot11Elt(ID='TIM', info=(
+'\x00\x01\x00\x00'
+))
+erpIe1=Dot11Elt(ID=0x2a, info=(
+'\x04'
+))
+erpIe2=Dot11Elt(ID=0x2f, info=(
+'\x04'
+))
+esRateIe=Dot11Elt(ID='ESRates', info=(
+'\x0c\x12\x18\x60'
+))
 
-class Dot11EltRates(Packet):
-    """ Our own definition for the supported rates field """
-    name = "802.11 Rates Information Element"
-    # Our Test STA supports the rates 6, 9, 12, 18, 24, 36, 48 and 54 Mbps
-    supported_rates = [0x0c, 0x12, 0x18, 0x24, 0x30, 0x48, 0x60, 0x6c]
-    fields_desc = [ByteField("ID", 1), ByteField("len", len(supported_rates))]
-    for index, rate in enumerate(supported_rates):
-        fields_desc.append(ByteField("supported_rate{0}".format(index + 1),
-                                     rate))
+frame = dot11/beacon/essid/supRates/dsSetIe/timIe/erpIe1/erpIe2/esRateIe
+frame.show()
+hexdump(frame)
 
-
-packet = Dot11(
-    addr1="00:a0:57:98:76:54",
-    addr2="00:a0:57:12:34:56",
-    addr3="00:a0:57:98:76:54") / Dot11AssoReq(
-    cap=0x1100, listen_interval=0x00a) / Dot11Elt(
-    ID=0, info="MY_BSSID")
-packet /= Dot11EltRates()
-# sendp(packet, iface="wlp0s29u1u7")
-packet.show()
+# Write frame to PCAP file
+pktdump = PcapWriter("./banana.pcap", append=False, sync=True)
+pktdump.write(frame)
+beacon = Dot11Beacon(timestamp=(0x00000002691a2184+100), cap='ESS+privacy+short-slot')
+frame = dot11/beacon/essid/supRates/dsSetIe/timIe/erpIe1/erpIe2/esRateIe
+pktdump.write(frame)
