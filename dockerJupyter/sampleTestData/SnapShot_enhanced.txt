@@ -1,0 +1,26 @@
+BOOLEAN tthsAllowedSp4Traffic (P_SPL_T pSplPkt)
+
+{
+P_TWT_PRESENT_SP_T pPresentSp=&gthPresentSprl [pSp1Pktˉ>p「eSentSp丁b1IdX] ;
+UINT_64 currTsf64=tthetCurrenthfTim664(pPresentSp—>uchsIndex) ;
+
+BOOLEAN isCurrenthfLeadPresentSpStarthf;
+BOOLEAN iSAllow=TRUE;
+UINT_64 timeDiffFromLeadZBehind= twtTimeDiffFromLeadZBehind(currTsf64, pPresentSp—>presentSpStarthf64,
+&isCurrenthfLeadPresentSpStarthf) ;
+if (isCurrenthfLeadPresentSpStarthf){
+UINT_32 toleranceTime=ZOOO; // Means 2ms
+if (timeDiffFromLeadZBehind>(pPresentSp—>presentSpDurationInUs—toleranceTime)){
+// Means EOSP
+nggthPresentSpEosp. rMngdr . eMsgId=MID_T0_TWT_PRESENT_SP_EOSP;
+nggthPresentSpEosp.pPresentSp=pPresentSp;
+wsysMboxSendMsg (MBOX_ID_G, (P_MSG_HDR_T) (&nggthPresentSpEosp) , MSG_SEND_ME7HOD_BUF) ;
+
+tthequesMSchedule (pPresentSp, FALSE) ;
+isAllow=FALSE;
+
+}
+}
+
+return isAllow;
+
