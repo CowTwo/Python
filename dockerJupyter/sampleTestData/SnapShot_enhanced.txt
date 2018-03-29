@@ -1,26 +1,10 @@
-BOOLEAN tthsAllowedSp4Traffic (P_SPL_T pSplPkt)
+To fully understand source and record, it will be useful to see how result recording is set up.
 
-{
-P_TWT_PRESENT_SP_T pPresentSp=&gthPresentSprl [pSp1Pktˉ>p「eSentSp丁b1IdX] ;
-UINT_64 currTsf64=tthetCurrenthfTim664(pPresentSp—>uchsIndex) ;
-
-BOOLEAN isCurrenthfLeadPresentSpStarthf;
-BOOLEAN iSAllow=TRUE;
-UINT_64 timeDiffFromLeadZBehind= twtTimeDiffFromLeadZBehind(currTsf64, pPresentSp—>presentSpStarthf64,
-&isCurrenthfLeadPresentSpStarthf) ;
-if (isCurrenthfLeadPresentSpStarthf){
-UINT_32 toleranceTime=ZOOO; // Means 2ms
-if (timeDiffFromLeadZBehind>(pPresentSp—>presentSpDurationInUs—toleranceTime)){
-// Means EOSP
-nggthPresentSpEosp. rMngdr . eMsgId=MID_T0_TWT_PRESENT_SP_EOSP;
-nggthPresentSpEosp.pPresentSp=pPresentSp;
-wsysMboxSendMsg (MBOX_ID_G, (P_MSG_HDR_T) (&nggthPresentSpEosp) , MSG_SEND_ME7HOD_BUF) ;
-
-tthequesMSchedule (pPresentSp, FALSE) ;
-isAllow=FALSE;
-
-}
-}
-
-return isAllow;
+When a module or channel is created in the simulation, the OMNeT++ runtime examines the
+@statistic properties on its NED declaration, and adds listeners on the signals they mention as
+input. There are two kinds of listeners associated with result recording: result ﬁlters and result
+recorders. Result filters can be chained, and at the end of the chain there is always a recorder. 80,
+there may be a recorder directly subscribed to a signal, or there may be a chain of one or more
+filters plus a recorder. Imagine it as a pipeline, or rather a “pipe tree”, where the tree roots are
+signals, the leaves are result recorders, and the intermediate nodes are result filters.
 
