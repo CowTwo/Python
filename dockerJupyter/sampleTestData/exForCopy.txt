@@ -1,0 +1,10 @@
+To fully understand source and record, it will be useful to see how result recording is set up.
+
+When a module or channel is created in the simulation, the OMNeT++ runtime examines the
+@statistic properties on its NED declaration, and adds listeners on the signals they mention as
+input. There are two kinds of listeners associated with result recording: result ﬁlters and result
+recorders. Result filters can be chained, and at the end of the chain there is always a recorder. 80,
+there may be a recorder directly subscribed to a signal, or there may be a chain of one or more
+filters plus a recorder. Imagine it as a pipeline, or rather a “pipe tree”, where the tree roots are
+signals, the leaves are result recorders, and the intermediate nodes are result filters.
+
