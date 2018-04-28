@@ -1,10 +1,19 @@
-To fully understand source and record, it will be useful to see how result recording is set up.
+" " "
 
-When a module or channel is created in the simulation, the OMNeT++ runtime examines the
-@statistic properties on its NED declaration, and adds listeners on the signals they mention as
-input. There are two kinds of listeners associated with result recording: result ﬁlters and result
-recorders. Result filters can be chained, and at the end of the chain there is always a recorder. 80,
-there may be a recorder directly subscribed to a signal, or there may be a chain of one or more
-filters plus a recorder. Imagine it as a pipeline, or rather a “pipe tree”, where the tree roots are
-signals, the leaves are result recorders, and the intermediate nodes are result filters.
+Extract data from CSV and Plot
+
+import pandas as pd
+import matplotlib. pyplot as plt
+
+outFilte「edFile="/p「oj/jSWG1036/〔OS工m4〔aCheDeV/eaSygen_V4‧6/my_teSt_plat/jS_log_0321_teStCaSe_28_eXt「aCt‧tXt"
+df=pd.read_csv(outFiIteredFiIe)
+derray=df[['ruTotNumUser']].va1ues
+x_list=[]
+for i in range(1en(derray)):
+x_list . append(derray[i] [G] )
+print(x_list)
+y_list=x_list
+
+plt .plot(x_list, y_list)
+p1t.show( )
 
