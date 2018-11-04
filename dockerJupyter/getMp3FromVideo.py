@@ -1,3 +1,6 @@
+# execute by "python ./getMp3FromVideo.py"
+#
+
 import subprocess, os
 import shutil
 import os

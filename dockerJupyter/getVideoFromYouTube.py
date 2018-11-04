@@ -1,3 +1,5 @@
+# execute by "python ./getVideoFromYouTube.py "
+
 import pytube
 
 linkFromYoutube=[
