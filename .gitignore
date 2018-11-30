@@ -1,0 +1,9 @@
+
+# temp file
+*.tmp
+
+# vim temp file
+*.swp
+
+# jupyter checkpoints
+.ipynb_checkpoints/

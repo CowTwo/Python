@@ -1,4 +1,5 @@
 # execute by "python ./getVideoFromYouTube.py "
+# For latest pytube update/example, please check https://python-pytube.readthedocs.io/en/latest/
 
 import pytube
 
