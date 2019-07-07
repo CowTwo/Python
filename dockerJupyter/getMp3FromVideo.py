@@ -9,6 +9,9 @@ videoRootdir = "/myCode/temp/video/"
 mp3Rootdir = "/myCode/temp/mp3/"
 videoExtName = "mp4"
 
+if not os.path.exists(mp3Rootdir):
+    os.makedirs(mp3Rootdir)
+
 for parent, dirnames, filenames in os.walk(videoRootdir):
     for filename in filenames:
         print("\tHas file=%s" %filename)
