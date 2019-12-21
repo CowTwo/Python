@@ -5,7 +5,8 @@ import pytube
 import os
 
 linkFromYoutube=[
-"https://www.youtube.com/watch?v=Asq80ZXjuXo",
+"https://www.youtube.com/watch?v=dQ0Yjvdl480",
+"https://www.youtube.com/watch?v=G8kiCj6HPzo",
 ]
 
 videoDownloadPath = "/myCode/temp/video/"
